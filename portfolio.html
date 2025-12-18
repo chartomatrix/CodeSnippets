@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chartor's Portfolio</title>
+    <link rel="icon" type="image/jpeg" href="https://raw.githubusercontent.com/alvinaidata1/images/main/undefined%20-%20Imgur%20(2).png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'blue-custom': '#5865F2',
+                        'navy-custom': '#7289da',
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'glow': 'glow 2s ease-in-out infinite alternate',
+                        'pulse-custom': 'pulse-custom 2s infinite',
+                        'fadeInUp': 'fadeInUp 0.6s ease forwards',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.7; }
+            50% { transform: translateY(-20px) rotate(180deg); opacity: 1; }
+        }
+        
+        @keyframes glow {
+            from { text-shadow: 0 0 20px rgba(88, 101, 242, 0.5); }
+            to { text-shadow: 0 0 40px rgba(88, 101, 242, 0.8), 0 0 60px rgba(88, 101, 242, 0.5); }
+        }
+        
+        @keyframes pulse-custom {
+            0% { box-shadow: 0 0 0 0 rgba(88, 101, 242, 0.7); }
+            70% { box-shadow: 0 0 0 20px rgba(88, 101, 242, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(88, 101, 242, 0); }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1e1b4b 0%, #0f172a 50%, #0a0a1e 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+
+        
+        .glass-morphism {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(88, 101, 242, 0.3);
+        }
+        
+        .gradient-text {
+            background: linear-gradient(45deg, #fff, #5865F2, #7289da);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        @keyframes borderGlow {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        
+        .hover-3d {
+            transition: all 0.3s ease;
+            transform: perspective(1000px) rotateY(0deg);
+        }
+        
+        .hover-3d:hover {
+            transform: perspective(1000px) rotateY(10deg) translateY(-10px);
+        }
+        
+        .tilt-card {
+            transform-style: preserve-3d;
+            will-change: transform;
+            transition: transform 0.25s ease, box-shadow 0.3s ease;
+        }
+        .tilt-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 50% 20%, rgba(255,255,255,0.12), transparent 60%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+        .tilt-card.glow-active::after { opacity: 1; }
+        
+        .btn-3d {
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.18s ease, box-shadow 0.25s ease;
+            box-shadow: 0 8px 18px -6px rgba(88,101,242,0.55), 0 2px 4px -1px rgba(0,0,0,0.6);
+        }
+        .btn-3d:before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            background: linear-gradient(140deg, rgba(255,255,255,0.22), rgba(255,255,255,0.03));
+            mix-blend-mode: overlay;
+            pointer-events: none;
+            opacity: .8;
+        }
+        .btn-3d:hover { transform: translateY(-6px) scale(1.015); box-shadow: 0 15px 28px -8px rgba(88,101,242,0.6), 0 4px 8px -2px rgba(0,0,0,0.65); }
+        .btn-3d:active { transform: translateY(-2px) scale(.985); box-shadow: 0 6px 14px -4px rgba(88,101,242,0.55), 0 2px 5px -2px rgba(0,0,0,.55); }
+    </style>
+</head>
+<body class="text-white overflow-x-hidden leading-relaxed">
+    <nav class="fixed top-0 w-full bg-black bg-opacity-40 backdrop-blur-md z-50 py-4 transition-all duration-300">
+        <div class="max-w-6xl mx-auto px-5 flex justify-between items-center">
+            <div class="text-2xl font-bold gradient-text">Chartor</div>
+            <ul class="hidden md:flex space-x-8">
+                <li><a href="#home" class="hover:text-blue-custom transition-all duration-300 relative group">
+                    Home
+                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-custom to-navy-custom transition-all duration-300 group-hover:w-full"></span>
+                </a></li>
+                <li><a href="#about" class="hover:text-blue-custom transition-all duration-300 relative group">
+                    About
+                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-custom to-navy-custom transition-all duration-300 group-hover:w-full"></span>
+                </a></li>
+                <li><a href="#skills" class="hover:text-blue-custom transition-all duration-300 relative group">
+                    Skills
+                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-custom to-navy-custom transition-all duration-300 group-hover:w-full"></span>
+                </a></li>
+                <li><a href="#projects" class="hover:text-blue-custom transition-all duration-300 relative group">
+                    Projects
+                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-custom to-navy-custom transition-all duration-300 group-hover:w-full"></span>
+                </a></li>
+                <li><a href="#contact" class="hover:text-blue-custom transition-all duration-300 relative group">
+                    Contact
+                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-custom to-navy-custom transition-all duration-300 group-hover:w-full"></span>
+                </a></li>
+            </ul>
+            <button class="md:hidden text-2xl">☰</button>
+        </div>
+    </nav>
+
+    <section id="home" class="min-h-screen flex items-center relative overflow-hidden">
+        <div class="max-w-6xl mx-auto px-5 grid md:grid-cols-2 gap-12 items-center">
+            <div class="z-10">
+                <h1 class="font-bold mb-5 gradient-text animate-glow text-[clamp(2.5rem,7vw,4.5rem)] leading-tight">Chartor</h1>
+                <h2 class="mb-8 text-gray-300 text-[clamp(1.4rem,4.2vw,2.5rem)] font-semibold tracking-wide">Full Stack Developer & Bot Developer</h2>
+                <p class="mb-10 text-gray-400 max-w-2xl text-[clamp(1rem,2.5vw,1.25rem)] leading-relaxed">Freelance Full Stack (Front-End + Back-End) Python & Web Developer with 4+ years of experience. I am able to build complete: responsive web Uis, backend APIs, databases, real-time features, and Discord bots.</p>
+                <a href="#contact" class="btn-3d inline-block px-8 py-4 bg-gradient-to-r from-blue-custom to-indigo-600 text-white font-bold rounded-full transition-all duration-300 hover:shadow-2xl hover:shadow-blue-custom/50">Get In Touch</a>
+            </div>
+            <div class="flex justify-center items-center">
+                <div class="w-48 h-48 md:w-64 md:h-64 rounded-full overflow-hidden border-4 border-blue-custom shadow-2xl shadow-blue-custom/50">
+                    <img src="https://raw.githubusercontent.com/alvinaidata1/images/main/undefined%20-%20Imgur%20(2).png" alt="Chartor Profile Picture" class="w-full h-full object-cover">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="py-16 md:py-20 relative">
+        <div class="max-w-6xl mx-auto px-5">
+            <h2 class="text-4xl md:text-5xl font-bold text-center mb-12 md:mb-16 gradient-text">About Me</h2>
+            <div class="max-w-4xl mx-auto">
+                <div class="space-y-6 text-lg text-gray-300 leading-relaxed">
+                    <p>Hi I'm <strong>Chartor</strong> – a passionate full-stack developer specializing in building powerful, secure web applications with 4 years ofexperience. </p>
+                    
+                    <p>My journey spans across diverse project types: from sophisticated admin control panels and dashboard systems,custom REST API architectures and backend. I specialize in creating Ai powered Discord bots with advanced automation features, developing browser automation tools for productivity enhancement, and building Python applications amd Websotes and few destop applications. I've successfully completed numerous projects across different industries, each meet unique client objectives and business requirements.</p>
+                    
+                    <p>Need a trustworthy developer who can turn your concept into a polished, professional product? From complex enterprise-level systems to sleek small-business solutions, I'm here to collaborate and deliver results that surpass your expectations every single time.</p>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16 text-center">
+                <div class="space-y-2">
+                    <h3 class="text-4xl font-bold text-blue-custom">Many</h3>
+                    <p class="text-gray-400">Projects Completed</p>
+                </div>
+                <div class="space-y-2">
+                    <h3 class="text-4xl font-bold text-blue-custom">100%</h3>
+                    <p class="text-gray-400">Client Satisfaction</p>
+                </div>
+                <div class="space-y-2">
+                    <h3 class="text-4xl font-bold text-blue-custom">4+</h3>
+                    <p class="text-gray-400">Years Experience</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="skills" class="py-16 md:py-20 relative">
+        <div class="max-w-6xl mx-auto px-5">
+            <h2 class="text-4xl md:text-5xl font-bold text-center mb-12 md:mb-16 gradient-text">What I Can Do</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+                <div class="glass-morphism rounded-2xl p-8 text-center hover:border-blue-custom/80 hover:shadow-2xl hover:shadow-blue-custom/30 relative overflow-hidden group">
+                    <div class="text-6xl mb-6">🚀</div>
+                    <h3 class="text-2xl font-bold mb-4 text-white">Full-Stack Web Development</h3>
+                    <p class="text-gray-400">Complete web application architecture from stunning frontend experiences to backend infrastructure with TypeScript, Node.js, Python, and modern frameworks for lightning-fast performance.</p>
+                    
+                </div>
+                
+                <div class="glass-morphism rounded-2xl p-8 text-center hover:border-blue-custom/80 hover:shadow-2xl hover:shadow-blue-custom/30 relative overflow-hidden group">
+                    <div class="text-6xl mb-6">🎯</div>
+                    <h3 class="text-2xl font-bold mb-4 text-white">SEO & Performance Optimization</h3>
+                    <p class="text-gray-400">Strategic search engine optimization including technical SEO, meta tags, OpenGraph implementation, and performance tuning to skyrocket your organic traffic and visibility.</p>
+                    
+                </div>
+                
+                <div class="glass-morphism rounded-2xl p-8 text-center hover:border-blue-custom/80 hover:shadow-2xl hover:shadow-blue-custom/30 relative overflow-hidden group">
+                    <div class="text-6xl mb-6">�</div>
+                    <h3 class="text-2xl font-bold mb-4 text-white">Dashboard & Admin Panels</h3>
+                    <p class="text-gray-400">Custom administrative interfaces and data visualization dashboards with real-time updates, user management systems, and intuitive control panels.</p>
+                    
+                </div>
+                
+                <div class="glass-morphism rounded-2xl p-8 text-center hover:border-blue-custom/80 hover:shadow-2xl hover:shadow-blue-custom/30 relative overflow-hidden group">
+                    <div class="text-6xl mb-6">🤖</div>
+                    <h3 class="text-2xl font-bold mb-4 text-white">Discord Bot Creation</h3>
+                    <p class="text-gray-400">Intelligent Discord bots with advanced moderation capabilities, interactive commands, and many more.</p>
+                    
+                </div>
+                
+                <div class="glass-morphism rounded-2xl p-8 text-center hover:border-blue-custom/80 hover:shadow-2xl hover:shadow-blue-custom/30 relative overflow-hidden group">
+                    <div class="text-6xl mb-6">🔐</div>
+                    <h3 class="text-2xl font-bold mb-4 text-white">Advanced Security Solutions</h3>
+                    <p class="text-gray-400">Advanced security implementations including custom authentication systems, end-to-end encryption, and comprehensive data protection strategies.</p>
+                    
+                </div>
+                
+                <div class="glass-morphism rounded-2xl p-8 text-center hover:border-blue-custom/80 hover:shadow-2xl hover:shadow-blue-custom/30 relative overflow-hidden group">
+                    <div class="text-6xl mb-6">⚡</div>
+                    <h3 class="text-2xl font-bold mb-4 text-white">Smart Automation Systems</h3>
+                    <p class="text-gray-400">Smart workflow automation including AI-powered support systems, web scraping solutions, task optimization,.and more.</p>
+                    
+                </div>
+                
+                <div class="glass-morphism rounded-2xl p-8 text-center hover:border-blue-custom/80 hover:shadow-2xl hover:shadow-blue-custom/30 relative overflow-hidden group">
+                    <div class="text-6xl mb-6">🎮</div>
+                    <h3 class="text-2xl font-bold mb-4 text-white">Gaming Platform Integration</h3>
+                    <p class="text-gray-400">Seamless integration with platforms like Roblox, comprehensive game data management, leaderboard systems, and automated gameplay enhancement solutions.</p>
+                    
+                </div>
+                
+                <div class="glass-morphism rounded-2xl p-8 text-center hover:border-blue-custom/80 hover:shadow-2xl hover:shadow-blue-custom/30 relative overflow-hidden group">
+                    <div class="text-6xl mb-6">🐍</div>
+                    <h3 class="text-2xl font-bold mb-4 text-white">Python Development & APIs</h3>
+                    <p class="text-gray-400">Professional Python development for scalable backend architectures, RESTful APIs, database optimization, data processing pipelines, and enterprise-grade automation solutions.</p>
+                    
+                </div>
+                
+                <div class="glass-morphism rounded-2xl p-8 text-center hover:border-blue-custom/80 hover:shadow-2xl hover:shadow-2xl hover:shadow-blue-custom/30 relative overflow-hidden group">
+                    <div class="text-6xl mb-6">🔧</div>
+                    <h3 class="text-2xl font-bold mb-4 text-white">Custom Application Development</h3>
+                    <p class="text-gray-400">Custom-engineered applications and specialized tools built from the ground up to perfectly match business logic, workflow requirements, and operational objectives.</p>
+                    
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects" class="py-16 md:py-20 relative">
+        <div class="max-w-6xl mx-auto px-5">
+            <h2 class="text-4xl md:text-5xl font-bold text-center mb-12 md:mb-16 gradient-text">Recent Projects</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+                <div class="glass-morphism rounded-2xl p-8 transition-all duration-300 hover:-translate-y-2 hover:border-blue-custom/80 hover:shadow-2xl hover:shadow-blue-custom/40">
+                    <div class="w-full h-48 rounded-xl mb-6 overflow-hidden">
+                        <img src="https://raw.githubusercontent.com/alvinaidata1/images/main/undefined%20-a%20Imgur.png" alt="AlvinAI Discord Bot" class="w-full h-full object-cover">
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4 text-white">Alvin AI (Full-Stack)</h3>
+                    <p class="text-gray-400 mb-4">Professional AI-powered Discord assistant for server management, moderation, and community engagement with advanced automation features and intelligent responses.</p>
+                    <div class="flex space-x-3 mb-6">
+                        <span class="bg-blue-custom/30 px-3 py-1 rounded-full text-sm">Discord.py</span>
+                        <span class="bg-blue-custom/30 px-3 py-1 rounded-full text-sm">AI Integration</span>
+                    </div>
+                    <button onclick="window.open('https://alvinai.tech', '_blank')" class="btn-3d w-full px-6 py-3 bg-gradient-to-r from-blue-custom to-indigo-600 text-white font-bold rounded-full transition-all duration-300 hover:shadow-lg hover:shadow-blue-custom/50">View Project</button>
+                </div>
+                
+                <div class="glass-morphism rounded-2xl p-8 transition-all duration-300 hover:-translate-y-2 hover:border-blue-custom/80 hover:shadow-2xl hover:shadow-blue-custom/40">
+                    <div class="w-full h-48 rounded-xl mb-6 overflow-hidden">
+                        <img src="https://raw.githubusercontent.com/alvinaidata1/images/main/undefined%20-%20Imgurws.png" alt="Westminster Response Website" class="w-full h-full object-cover">
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4 text-white">Westminster Response (Full-Stack)</h3>
+                    <p class="text-gray-400 mb-4">Westminster Response is a Roblox roleplay game that aims to become the most immersive emergency responder roleplay game on the platform. Set in the City of Westminster, UK, it offers players the chance to become police officers, medics, or criminals, with the choice entirely up to them.</p>
+                    <div class="flex space-x-3 mb-6">
+                        <span class="bg-blue-custom/30 px-3 py-1 rounded-full text-sm">Discord.py</span>
+                        <span class="bg-blue-custom/30 px-3 py-1 rounded-full text-sm">Slash Commands</span>
+                        <span class="bg-blue-custom/30 px-3 py-1 rounded-full text-sm">UI Components</span>
+                    </div>
+                    <button onclick="window.open('https://statuesquely-marshiest-candance.ngrok-free.dev/', '_blank')" class="btn-3d w-full px-6 py-3 bg-gradient-to-r from-blue-custom to-indigo-600 text-white font-bold rounded-full transition-all duration-300 hover:shadow-lg hover:shadow-blue-custom/50">View Project</button>
+                </div>
+                
+                <div class="glass-morphism rounded-2xl p-8 transition-all duration-300 hover:-translate-y-2 hover:border-blue-custom/80 hover:shadow-2xl hover:shadow-blue-custom/40">
+                    <div class="w-full h-48 rounded-xl mb-6 overflow-hidden">
+                        <img src="https://raw.githubusercontent.com/alvinaidata1/images/main/undefined%20-%20Imgur%20(3).png" alt="Invite Moderator Discord Bot" class="w-full h-full object-cover">
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4 text-white">Invite Moderator Discord Bot</h3>
+                    <p class="text-gray-400 mb-4">Advanced Discord moderation bot that automatically detects and removes NSFW server invites using intelligent pattern matching, regex analysis, and real-time invite verification through Discord API.</p>
+                    <div class="flex space-x-3 mb-6">
+                        <span class="bg-blue-custom/30 px-3 py-1 rounded-full text-sm">Discord.py</span>
+                        <span class="bg-blue-custom/30 px-3 py-1 rounded-full text-sm">Regex</span>
+                        <span class="bg-blue-custom/30 px-3 py-1 rounded-full text-sm">API Integration</span>
+                    </div>
+                    <button onclick="window.open('https://discord.gg/Y8WgnAVFdF', '_blank')" class="btn-3d w-full px-6 py-3 bg-gradient-to-r from-blue-custom to-indigo-600 text-white font-bold rounded-full transition-all duration-300 hover:shadow-lg hover:shadow-blue-custom/50">View Project</button>
+                </div>
+                
+                <div class="glass-morphism rounded-2xl p-8 transition-all duration-300 hover:-translate-y-2 hover:border-blue-custom/80 hover:shadow-2xl hover:shadow-blue-custom/40">
+                    <div class="w-full h-48 rounded-xl mb-6 overflow-hidden">
+                        <img src="https://raw.githubusercontent.com/alvinaidata1/images/main/undefined%20-%20Imgur%20(4).png" alt="Discord Suggestion Bot" class="w-full h-full object-cover">
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4 text-white">Discord Suggestion Bot</h3>
+                    <p class="text-gray-400 mb-4">Advanced Discord suggestion management system with approval workflows, automatic reactions, discussion threads, and DM notifications. Features threshold-based auto-approval and comprehensive admin controls.</p>
+                    <div class="flex space-x-3 mb-6">
+                        <span class="bg-blue-custom/30 px-3 py-1 rounded-full text-sm">Discord.py</span>
+                        <span class="bg-blue-custom/30 px-3 py-1 rounded-full text-sm">Slash Commands</span>
+                        <span class="bg-blue-custom/30 px-3 py-1 rounded-full text-sm">UI Components</span>
+                    </div>
+                    <button onclick="window.open('https://discord.gg/Y8WgnAVFdF', '_blank')" class="btn-3d w-full px-6 py-3 bg-gradient-to-r from-blue-custom to-indigo-600 text-white font-bold rounded-full transition-all duration-300 hover:shadow-lg hover:shadow-blue-custom/50">View Project</button>
+                </div>
+                
+                <div class="glass-morphism rounded-2xl p-8 transition-all duration-300 hover:-translate-y-2 hover:border-blue-custom/80 hover:shadow-2xl hover:shadow-blue-custom/40">
+                    <div class="w-full h-48 rounded-xl mb-6 overflow-hidden">
+                        <img src="https://raw.githubusercontent.com/alvinaidata1/images/main/undefined%20-%20Imgur%20(5).png" alt="Minigames Discord Bot" class="w-full h-full object-cover">
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4 text-white">Minigames Discord Bot</h3>
+                    <p class="text-gray-400 mb-4">Interactive Mini-Games Bot featuring 8+ games including Tic-Tac-Toe, Rock Paper Scissors, Trivia, and more! Play against smart AI opponents, track your stats, compete on leaderboards, and enjoy modern slash commands with interactive buttons.</p>
+                    <div class="flex space-x-3 mb-6">
+                        <span class="bg-blue-custom/30 px-3 py-1 rounded-full text-sm">Discord.py</span>
+                        <span class="bg-blue-custom/30 px-3 py-1 rounded-full text-sm">SQLite</span>
+                        <span class="bg-blue-custom/30 px-3 py-1 rounded-full text-sm">AI Logic</span>
+                    </div>
+                    <button onclick="window.open('https://discord.gg/Y8WgnAVFdF', '_blank')" class="btn-3d w-full px-6 py-3 bg-gradient-to-r from-blue-custom to-indigo-600 text-white font-bold rounded-full transition-all duration-300 hover:shadow-lg hover:shadow-blue-custom/50">View Project</button>
+                </div>
+            </div>
+            <div class="text-center mt-8">
+                <p class="text-xl font-bold text-white">This Portfolio was made by me aswell !</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-16 md:py-20 relative">
+        <div class="max-w-6xl mx-auto px-5">
+            <h2 class="text-4xl md:text-5xl font-bold text-center mb-8 gradient-text">How I Operate</h2>
+            <p class="text-center text-xl mb-12 text-gray-400">Focused on clear communication, dependable results, and outstanding client experiences.</p>
+            
+            <div class="grid md:grid-cols-2 gap-6 md:gap-8 max-w-5xl mx-auto">
+                <div class="glass-morphism rounded-2xl p-8 hover:border-blue-custom/60 transition-all duration-300">
+                    <div class="flex items-center mb-4">
+                        <div class="w-3 h-3 bg-blue-custom rounded-full mr-4"></div>
+                        <h3 class="text-xl font-bold text-white">Full Project Rights</h3>
+                    </div>
+                    <p class="text-gray-400">Every line of code and project asset belongs entirely to you once completed and payed. No strings attached - whether you host it yourself or let me handle it, you own everything.</p>
+                </div>
+
+                <div class="glass-morphism rounded-2xl p-8 hover:border-blue-custom/60 transition-all duration-300">
+                    <div class="flex items-center mb-4">
+                        <div class="w-3 h-3 bg-blue-custom rounded-full mr-4"></div>
+                        <h3 class="text-xl font-bold text-white">Budget-Friendly Hosting</h3>
+                    </div>
+                    <p class="text-gray-400">Solid hosting solutions starting at just <span class="text-blue-400 font-semibold">$7 for the first month</span> and <span class="text-blue-400 font-semibold">$10/month</span> for the rest. Complete with round-the-clock monitoring and upkeep.</p>
+                </div>
+
+                <div class="glass-morphism rounded-2xl p-8 hover:border-blue-custom/60 transition-all duration-300">
+                    <div class="flex items-center mb-4">
+                        <div class="w-3 h-3 bg-blue-custom rounded-full mr-4"></div>
+                        <h3 class="text-xl font-bold text-white">Excellence Guarantee</h3>
+                    </div>
+                    <p class="text-gray-400">Committed to top-tier results delivered quickly with regular updates throughout. Your happiness is guaranteed - if you're not satisfied, you get your money back.</p>
+                </div>
+
+                <div class="glass-morphism rounded-2xl p-8 hover:border-blue-custom/60 transition-all duration-300">
+                    <div class="flex items-center mb-4">
+                        <div class="w-3 h-3 bg-blue-custom rounded-full mr-4"></div>
+                        <h3 class="text-xl font-bold text-white">Lifetime Bug Fixes</h3>
+                    </div>
+                    <p class="text-gray-400">Free issue resolution forever on projects under <span class="text-green-400 font-semibold">$1000</span>. New features and upgrades are quoted separately, but bugs are always on me.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-16 md:py-20 relative">
+        <div class="max-w-6xl mx-auto px-5">
+            <div class="max-w-4xl mx-auto glass-morphism rounded-2xl p-12 text-center">
+                <h2 class="text-4xl font-bold mb-6 text-white">Ready to build something incredible?</h2>
+                <p class="text-xl mb-10 text-gray-400">Let's discuss your project and bring your vision to life! I'm ready to blow your expectations :></p>
+                
+                <a href="https://discord.gg/5aNtuzJ6aD" class="btn-3d inline-block px-10 py-4 bg-gradient-to-r from-blue-600 to-purple-700 text-white font-bold rounded-full text-xl transition-all duration-300 hover:shadow-2xl hover:shadow-blue-custom/50">Contact Me on Discord</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="py-16 md:py-20 relative">
+        <div class="max-w-6xl mx-auto px-5">
+            <h2 class="text-4xl md:text-5xl font-bold text-center mb-8 gradient-text">Let's Work Together</h2>
+            <p class="text-center text-xl mb-12 text-gray-400">Ready to bring your idea to life? Contact me in Discord to discuss your project!</p>
+            
+            <div class="text-center">
+                <div class="max-w-2xl mx-auto glass-morphism rounded-2xl p-10">
+                    <div class="text-6xl mb-6">💬</div>
+                    <h3 class="text-3xl font-bold mb-4 text-white">Discord Only</h3>
+                    <p class="text-lg mb-8 text-gray-400">I prefer to handle all project discussions and communications through Discord for faster response times and better collaboration.</p>
+                    <a href="https://discord.gg/5aNtuzJ6aD" class="btn-3d inline-block px-8 py-4 bg-gradient-to-r from-blue-custom to-indigo-600 text-white font-bold rounded-full transition-all duration-300 hover:shadow-2xl hover:shadow-blue-custom/50 text-xl">Message Me on Discord</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-black/80 py-12 text-center border-t border-blue-custom/30">
+        <div class="max-w-6xl mx-auto px-5">
+            <p class="text-gray-400">&copy; 2025 chartomatrix. All rights reserved.</p>
+            <p class="text-gray-500 mt-2">Building the future, one project at a time.</p>
+        </div>
+    </footer>
+
+    <script>
+
+        
+        function scrl() {
+            const lnks = document.querySelectorAll('a[href^="#"]');
+            
+            lnks.forEach(l => {
+                l.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const tgt = document.querySelector(this.getAttribute('href'));
+                    if (tgt) {
+                        tgt.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+        }
+        
+        function chk_cards() {
+            const c = document.querySelectorAll('.glass-morphism');
+            
+            const obs = new IntersectionObserver((entries) => {
+                entries.forEach(e => {
+                    if (e.isIntersecting) {
+                        e.target.style.animation = 'fadeInUp 0.6s ease forwards';
+                    }
+                });
+            });
+            
+            c.forEach(crd => {
+                obs.observe(crd);
+            });
+        }
+        
+        function navstf() {
+            const nav = document.querySelector('nav');
+            
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 100) {
+                    nav.classList.remove('bg-opacity-40');
+                    nav.classList.add('bg-opacity-60');
+                } else {
+                    nav.classList.remove('bg-opacity-60');
+                    nav.classList.add('bg-opacity-40');
+                }
+            });
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            scrl();
+            chk_cards();
+            navstf();
+            init_tilt();
+        });
+        
+        function init_tilt(){
+            const sup = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+            if(!sup) return;
+            const crds = document.querySelectorAll('.tilt-card');
+            const mx = 10;
+            crds.forEach(c => {
+                let tmr;
+                c.addEventListener('mousemove', (e) => {
+                    const rct = c.getBoundingClientRect();
+                    const x = e.clientX - rct.left;
+                    const y = e.clientY - rct.top;
+                    const cx = rct.width / 2;
+                    const cy = rct.height / 2;
+                    const tX = ((y - cy) / cy) * mx;
+                    const tY = -((x - cx) / cx) * mx;
+                    c.style.transform = `perspective(900px) rotateX(${tX.toFixed(2)}deg) rotateY(${tY.toFixed(2)}deg) translateY(-4px)`;
+                    c.classList.add('glow-active');
+                    if(tmr) clearTimeout(tmr);
+                    tmr = setTimeout(()=> c.classList.remove('glow-active'), 350);
+                });
+                c.addEventListener('mouseleave', () => {
+                    c.style.transform = 'perspective(900px) rotateX(0deg) rotateY(0deg) translateY(0)';
+                    c.classList.remove('glow-active');
+                });
+            });
+        }
+
+    </script>
+</body>
+</html>
+
+
+

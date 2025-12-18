@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Westminster Response — Wizard Studios</title>
+    <style>
+        * {margin:0; padding:0; box-sizing:border-box}
+        body {font-family: Arial, sans-serif; background:#000; color:#ddd; overflow-x:hidden}
+        .nav {position:fixed; top:0; width:100%; z-index:100; display:flex; justify-content:space-between; align-items:center; padding:20px 50px; backdrop-filter:blur(12px); border-bottom:1px solid rgba(147,51,234,0.2)}
+        .brand {display:flex; gap:15px; align-items:center}
+        .logo {width:50px; height:50px; background:url('https://raw.githubusercontent.com/alvinaidata1/images/main/undefined%20-%20Imgur.png') center/cover; border-radius:50%}
+        .title {font-size:20px; font-weight:700; color:#fff}
+        .nav-right {display:flex; gap:15px; align-items:center}
+        .btn-login {padding:10px 24px; background:#5865f2; color:#fff; text-decoration:none; font-weight:500; border:none; border-radius:6px; transition:0.3s; cursor:pointer; display:flex; align-items:center; gap:8px; font-size:15px}
+        .btn-login:hover {background:#4752c4}
+        .btn-admin {padding:10px 24px; background:transparent; color:#fff; text-decoration:none; font-weight:500; border:none; border-radius:6px; transition:0.3s; font-size:15px}
+        .btn-admin:hover {background:rgba(255,255,255,0.1)}
+        .usr-prof {position:relative; display:flex; align-items:center; gap:12px; padding:6px 12px; background:rgba(255,255,255,0.08); border-radius:20px; cursor:pointer; transition:0.3s; backdrop-filter:blur(10px)}
+        .usr-prof:hover {background:rgba(255,255,255,0.12)}
+        .usr-pfp {width:40px; height:40px; border-radius:50%; background:#36393f}
+        .usr-name {font-weight:500; color:#fff; font-size:14px}
+        .usr-role {font-size:12px; color:#a78bfa; background:rgba(167,139,250,0.15); padding:3px 10px; border-radius:12px; font-weight:500}
+        .dropdown {position:absolute; top:calc(100% + 12px); right:0; background:rgba(20,20,30,0.6); border:1px solid rgba(147,51,234,0.4); border-radius:16px; padding:16px; min-width:240px; opacity:0; visibility:hidden; transform:translateY(-10px); transition:all 0.3s ease; backdrop-filter:blur(16px); box-shadow:0 8px 32px rgba(0,0,0,0.4)}
+        .dropdown.show {opacity:1; visibility:visible; transform:translateY(0)}
+        .dropdown-header {display:flex; align-items:center; gap:12px; padding-bottom:12px; border-bottom:1px solid rgba(147,51,234,0.2); margin-bottom:12px}
+        .dropdown-header-pfp {width:48px; height:48px; border-radius:50%}
+        .dropdown-header-info {flex:1}
+        .dropdown-header-name {font-size:15px; font-weight:500; color:#fff; margin-bottom:2px}
+        .dropdown-header-role {font-size:12px; color:#a78bfa; background:rgba(167,139,250,0.15); padding:3px 10px; border-radius:12px; display:inline-block}
+        .dropdown-section {margin-top:8px}
+        .dropdown-item {width:100%; padding:10px 12px; background:transparent; color:#fff; border:none; border-radius:8px; font-weight:500; cursor:pointer; transition:0.2s; font-size:14px; text-align:left; display:flex; align-items:center; gap:10px}
+        .dropdown-item:hover {background:rgba(255,255,255,0.08)}
+        .dropdown-item.logout {color:#ef4444}
+        .dropdown-item.logout:hover {background:rgba(239,68,68,0.1)}
+        
+        .hero {position:relative; height:100vh; display:flex; align-items:center; justify-content:center; background:linear-gradient(180deg, rgba(0,0,0,0.5), rgba(0,0,0,0.7)), url('https://raw.githubusercontent.com/alvinaidata1/images/main/IMG_6031.png') center/cover; text-align:center}
+        .hero:after {content:''; position:absolute; bottom:0; left:0; right:0; height:150px; background:linear-gradient(to bottom, transparent, #000); pointer-events:none}
+        .hero-badge {width:200px; height:200px; margin:0 auto 50px; background:url('https://raw.githubusercontent.com/alvinaidata1/images/main/undefined%20-%20Imgur.png') center/contain no-repeat; display:flex; align-items:center; justify-content:center; position:relative}
+        .badge-text {font-size:80px; font-weight:700; color:#7c3aed; text-shadow:0 0 15px rgba(124,58,237,0.4); display:none}
+        .hero h1 {font-size:56px; font-weight:700; margin-bottom:30px; color:#fff; text-shadow:2px 2px 8px rgba(0,0,0,0.8)}
+        .hero-sub {font-size:24px; color:#aaa; margin-bottom:50px}
+        .hero-desc {max-width:900px; margin:0 auto 50px; font-size:18px; line-height:2; color:#bbb}
+        .hero-cta {display:inline-block; padding:18px 60px; background:#7c3aed; color:#fff; text-decoration:none; font-weight:700; font-size:18px; border:1px solid rgba(124,58,237,0.5); border-radius:8px; transition:0.3s}
+        .hero-cta:hover {background:#6d28d9; box-shadow:0 0 20px rgba(124,58,237,0.4)}
+        
+        .banner {background:rgba(124,58,237,0.8); padding:15px 0; text-align:center; font-size:14px; font-weight:600; color:#fff}
+        
+        .section {padding:120px 60px; position:relative}
+        .section:nth-child(even) {background:#0a0a0a}
+        .section-title {font-size:42px; font-weight:700; margin-bottom:80px; text-align:center; color:#7c3aed; position:relative}
+        .section-title:after {content:''; position:absolute; bottom:-30px; left:50%; transform:translateX(-50%); width:120px; height:3px; background:rgba(124,58,237,0.5)}
+        
+        .campaign {max-width:1300px; margin:0 auto 100px auto; display:grid; grid-template-columns:1fr 1fr; gap:50px; align-items:center}
+        .campaign-reverse {direction:ltr}
+        .campaign-img {width:100%; height:450px; background:linear-gradient(rgba(124,58,237,0.15), rgba(0,0,0,0.6)), url('https://raw.githubusercontent.com/alvinaidata1/images/main/IMG_6031.png') center/cover; border:1px solid rgba(124,58,237,0.3); border-radius:16px; position:relative}
+        .campaign-content h2 {font-size:36px; font-weight:700; margin-bottom:30px; color:#fff}
+        .campaign-content p {font-size:17px; line-height:2; color:#aaa; margin-bottom:30px}
+        
+        .discord {padding:100px 60px; background:linear-gradient(135deg, #1a1a1a, #0a0a0a); text-align:center}
+        .discord-btn {display:inline-block; padding:20px 60px; background:#5865f2; color:#fff; text-decoration:none; font-weight:700; font-size:18px; border:1px solid rgba(88,101,242,0.5); border-radius:8px; transition:0.3s; margin-top:30px}
+        .discord-btn:hover {background:transparent; box-shadow:0 0 20px rgba(88,101,242,0.4)}
+        
+        footer {padding:50px; text-align:center; color:#666; font-size:14px; border-top:2px solid #222}
+        
+        @media (max-width:900px) {
+            .campaign {grid-template-columns:1fr; gap:40px; margin-bottom:60px}
+            .campaign-reverse {grid-template-columns:1fr}
+            .campaign-img {height:300px}
+            .hero {height:auto; padding:120px 20px 80px 20px}
+            .hero-badge {width:150px; height:150px; margin-bottom:40px}
+            .hero-badge:before {width:130px; height:130px}
+            .badge-text {font-size:60px}
+            .hero h1 {font-size:36px}
+            .hero-sub {font-size:18px; margin-bottom:30px}
+            .hero-desc {font-size:16px; line-height:1.8; margin-bottom:40px}
+            .hero-cta {padding:14px 40px; font-size:16px}
+            .section-title {font-size:32px; margin-bottom:60px}
+            .section-title:after {bottom:-20px; width:80px; height:2px}
+            .campaign-content h2 {font-size:28px; margin-bottom:20px}
+            .campaign-content p {font-size:15px; line-height:1.8; margin-bottom:20px}
+            .nav {padding:15px 20px}
+            .title {font-size:18px}
+            .btn-login {padding:10px 24px; font-size:14px}
+            .logo {width:40px; height:40px}
+            .banner {font-size:12px; padding:12px 20px}
+            .section {padding:80px 20px}
+            .discord {padding:80px 20px}
+            .discord-btn {padding:16px 40px; font-size:16px}
+            footer {padding:40px 20px; font-size:12px}
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <div class="brand">
+            <div class="logo"></div>
+            <div class="title">Westminster Response</div>
+        </div>
+        <div class="nav-right" id="navRight">
+            <button class="btn-login" onclick="dcLogin()">
+                <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515a.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0a12.64 12.64 0 0 0-.617-1.25a.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057a19.9 19.9 0 0 0 5.993 3.03a.078.078 0 0 0 .084-.028a14.09 14.09 0 0 0 1.226-1.994a.076.076 0 0 0-.041-.106a13.107 13.107 0 0 1-1.872-.892a.077.077 0 0 1-.008-.128a10.2 10.2 0 0 0 .372-.292a.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127a12.299 12.299 0 0 1-1.873.892a.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028a19.839 19.839 0 0 0 6.002-3.03a.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.956-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42c0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.955-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42c0 1.333-.946 2.418-2.157 2.418z"/>
+                </svg>
+                Login with Discord
+            </button>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div>
+            <div class="hero-badge">
+                <div class="badge-text">W</div>
+            </div>
+            <h1>Westminster Response</h1>
+            <p class="hero-desc">
+                Westminster Response is a Roblox roleplay game that aims to become the most immersive emergency responder roleplay game on the platform. Set in the City of Westminster, UK, it offers players the chance to become police officers, medics, or criminals, with the choice entirely up to them. Our dedicated development team is constantly working to enhance the game and provide updates to the community.
+            </p>
+        </div>
+    </section>
+
+    <section class="section">
+        <h2 class="section-title">About Game</h2>
+        <div class="campaign">
+            <div class="campaign-img"></div>
+            <div class="campaign-content">
+                <h2>What is Westminster Response?</h2>
+                <p>
+                    Westminster Response is a Roblox roleplay game that aims to become the most immersive emergency responder roleplay game on the platform. Set in the City of Westminster, UK, it offers players the chance to become police officers, medics, or criminals, with the choice entirely up to them.
+                </p>
+                <p>
+                    Our dedicated development team is constantly working to enhance the game and provide updates to the community. As we strive towards a game launch, the game is currently restricted to QA Testers only.
+                </p>
+            </div>
+        </div>
+
+        <div class="campaign campaign-reverse">
+            <div class="campaign-content">
+                <h2>Current Status</h2>
+                <p>
+                    This game is currently in a restricted testing phase to ensure quality and stability before our full launch. We're working hard to deliver the best possible experience for all players.
+                </p>
+                <p style="font-weight:700; color:#7c3aed">
+                    PC - ONLY<br>
+                    QA - ONLY
+                </p>
+            </div>
+            <div class="campaign-img" style="background-image:linear-gradient(rgba(124,58,237,0.15), rgba(0,0,0,0.6)), url('https://raw.githubusercontent.com/alvinaidata1/images/main/IMG_6032.png')"></div>
+        </div>
+
+        <div class="campaign">
+            <div class="campaign-img" style="background-image:linear-gradient(rgba(124,58,237,0.15), rgba(0,0,0,0.6)), url('https://raw.githubusercontent.com/alvinaidata1/images/main/IMG_6336.jpeg')"></div>
+            <div class="campaign-content">
+                <h2>Immersive Emergency Response</h2>
+                <p>
+                    Westminster Response delivers an authentic emergency responder experience in the heart of the UK capital. Whether you choose to serve as a Metropolitan Police officer maintaining law and order, a dedicated medic saving lives, or take a different path, every role offers unique gameplay and opportunities.
+                </p>
+                <p>
+                    Our development team is committed to creating the most realistic and engaging emergency roleplay experience on Roblox, with regular updates and improvements based on community feedback.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="discord">
+        <h2 class="section-title">Join Our Community</h2>
+        <p style="color:#aaa; font-size:18px; max-width:700px; margin:0 auto">Connect with hundreds of roleplayers, get updates, participate in discussions, and stay informed about events and server news.</p>
+        <a class="discord-btn" href="https://discord.gg/fMB58UEWcq" target="_blank">Join Discord</a>
+    </section>
+
+    <footer>
+        © 2025 Wizard Studios. All rights reserved. — Westminster Response
+    </footer>
+
+    <script>
+        async function chkAuth() {
+            try {
+                const r = await fetch('/api/check_auth');
+                const d = await r.json();
+                
+                if (d.logged_in) {
+                    const nav = document.getElementById('navRight');
+                    nav.innerHTML = '';
+                    
+                    if (d.role === 'admin' || d.role === 'moderator') {
+                        const ab = document.createElement('a');
+                        ab.href = d.role === 'admin' ? '/dashboard' : '/moderation';
+                        ab.className = 'btn-admin';
+                        ab.textContent = 'Admin Panel';
+                        nav.appendChild(ab);
+                    }
+                    
+                    const prf = document.createElement('div');
+                    prf.className = 'usr-prof';
+                    prf.onclick = tglDrop;
+                    
+                    const pfp = document.createElement('img');
+                    pfp.src = d.avatar || 'https://cdn.discordapp.com/embed/avatars/0.png';
+                    pfp.className = 'usr-pfp';
+                    
+                    const nm = document.createElement('span');
+                    nm.className = 'usr-name';
+                    nm.textContent = d.username;
+                    
+                    const dd = document.createElement('div');
+                    dd.className = 'dropdown';
+                    dd.id = 'dropdown';
+                    
+                    const dh = document.createElement('div');
+                    dh.className = 'dropdown-header';
+                    
+                    const hp = document.createElement('img');
+                    hp.src = d.avatar || 'https://cdn.discordapp.com/embed/avatars/0.png';
+                    hp.className = 'dropdown-header-pfp';
+                    
+                    const hi = document.createElement('div');
+                    hi.className = 'dropdown-header-info';
+                    
+                    const hn = document.createElement('div');
+                    hn.className = 'dropdown-header-name';
+                    hn.textContent = d.username;
+                    
+                    const hr = document.createElement('div');
+                    hr.className = 'dropdown-header-role';
+                    hr.textContent = d.role.charAt(0).toUpperCase() + d.role.slice(1);
+                    
+                    hi.appendChild(hn);
+                    hi.appendChild(hr);
+                    dh.appendChild(hp);
+                    dh.appendChild(hi);
+                    
+                    const ds = document.createElement('div');
+                    ds.className = 'dropdown-section';
+                    
+                    const vb = document.createElement('button');
+                    vb.className = 'dropdown-item';
+                    vb.innerHTML = '<svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M8 0c-.69 0-1.843.265-2.928.56-1.11.3-2.229.655-2.887.87a1.54 1.54 0 0 0-1.044 1.262c-.596 4.477.787 7.795 2.465 9.99a11.777 11.777 0 0 0 2.517 2.453c.386.273.744.482 1.048.625.28.132.581.24.829.24s.548-.108.829-.24a7.159 7.159 0 0 0 1.048-.625 11.775 11.775 0 0 0 2.517-2.453c1.678-2.195 3.061-5.513 2.465-9.99a1.541 1.541 0 0 0-1.044-1.263 62.467 62.467 0 0 0-2.887-.87C9.843.266 8.69 0 8 0zm2.146 5.146a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 7.793l2.646-2.647z"/></svg> Roblox Verification';
+                    vb.onclick = () => window.location.href = '/verify';
+                    
+                    const lb = document.createElement('button');
+                    lb.className = 'dropdown-item logout';
+                    lb.innerHTML = '<svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z"/><path d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/></svg> Logout';
+                    lb.onclick = out;
+                    
+                    ds.appendChild(vb);
+                    ds.appendChild(lb);
+                    dd.appendChild(dh);
+                    dd.appendChild(ds);
+                    prf.appendChild(pfp);
+                    prf.appendChild(nm);
+                    prf.appendChild(dd);
+                    nav.appendChild(prf);
+                }
+            } catch (e) {}
+        }
+
+        function tglDrop(e) {
+            e.stopPropagation();
+            document.getElementById('dropdown').classList.toggle('show');
+        }
+
+        function out() { window.location.href = '/logout'; }
+        function dcLogin() { window.location.href = '/discord_login'; }
+
+        document.addEventListener('click', () => {
+            const dd = document.getElementById('dropdown');
+            if (dd) dd.classList.remove('show');
+        });
+
+        chkAuth();
+    </script>
+</body>
+</html>
